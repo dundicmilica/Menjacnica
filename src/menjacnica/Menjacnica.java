@@ -19,21 +19,38 @@ public class Menjacnica implements MenjacnicaInterfejs{
 		v.setProdajniKurs(prodajniKurs);
 		v.setNaziv(naziv);
 		v.setSkraceniNaziv(skraceniNaziv);
-		
-		double srednjiKurs = (prodajniKurs + kupovniKurs)/2;
-		v.setSrednjiKurs(srednjiKurs);
+		v.setSrednjiKurs((prodajniKurs + kupovniKurs) / 2);
 		
 		valuta.add(v);
-		
 	}
 
 	public void brisanjeKursa(GregorianCalendar dan, String naziv) {
-		// TODO Auto-generated method stub
 		
+		Valuta v = new Valuta();
+		
+		v.setDatum(dan);
+		v.setNaziv(naziv);
+		
+		for (int i = 0; i < valuta.size(); i++) {
+			if (valuta.get(i).equals(v))
+				valuta.remove(i);
+		}
 	}
 
 	public Valuta pronadjiKursNaDan(GregorianCalendar dan, String naziv) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Valuta v = new Valuta();
+		Valuta pomValuta = null;
+		
+		v.setDatum(dan);
+		v.setNaziv(naziv);
+		
+		for (int i = 0; i < valuta.size(); i++) {
+			if (valuta.get(i).equals(v)) {
+				pomValuta = v;
+				break;
+			}
+		}
+		return pomValuta;
 	}
 }
