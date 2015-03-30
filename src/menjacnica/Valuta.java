@@ -48,4 +48,47 @@ public class Valuta {
 	public void setProdajniKurs(double prodajniKurs) {
 		this.prodajniKurs = prodajniKurs;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((datum == null) ? 0 : datum.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(kupovniKurs);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((naziv == null) ? 0 : naziv.hashCode());
+		temp = Double.doubleToLongBits(prodajniKurs);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result
+				+ ((skraceniNaziv == null) ? 0 : skraceniNaziv.hashCode());
+		temp = Double.doubleToLongBits(srednjiKurs);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Valuta))	//kada trazimo neku valutu na odredjen dan, poredi se samo
+				return false;			//pravi naziv ili skraceni naziv; kurs nije bitan
+		
+		Valuta valuta = (Valuta) obj;
+		GregorianCalendar valutaDan = valuta.getDatum();
+		GregorianCalendar danas = new GregorianCalendar();
+			if (danas.get(GregorianCalendar.YEAR) == valutaDan.get(GregorianCalendar.YEAR) 
+					&& danas.get(GregorianCalendar.DAY_OF_YEAR) == valutaDan.get(GregorianCalendar.DAY_OF_YEAR)
+					&& valuta.getNaziv().equals(naziv) && valuta.getSkraceniNaziv().equals(skraceniNaziv))
+				return true;
+
+			return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "Valuta (naziv: " + naziv + ", skraceniNaziv: " + skraceniNaziv
+				+ ", datum: " + datum + ", kupovniKurs: " + kupovniKurs
+				+ ", srednjiKurs: " + srednjiKurs + ", prodajniKurs: "
+				+ prodajniKurs + ")";
+	}
+	
 }
